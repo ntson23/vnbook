@@ -1,0 +1,281 @@
+﻿@model WebBook.ViewModels.ProductVM
+@using WebBook.ViewComponents
+@using WebBook.Common
+@using WebBook.ViewComponents
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<ApplicationUser> _userManager;
+@{
+    var loggedInUser = new ApplicationUser();
+    loggedInUser = _userManager.Users?.FirstOrDefault(x => x.UserName == User.Identity!.Name);
+}
+
+
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<link rel="stylesheet" type="text/css" href="~/client/styles/single_styles.css">
+<link rel="stylesheet" type="text/css" href="~/client/styles/single_responsive.css">
+
+<style>
+
+/*    #quantity_value{
+        height: 100%;
+        border: none;
+        width: 50px;
+    }
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    input[type="number"]{
+        font-size: 20px;
+        text-align: center;
+        font-weight: 500;
+    }*/
+    
+
+    .swiper {
+        width: 100%;
+        height: 100%;
+    }
+
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        .swiper-slide img {
+            display: block;
+            /*width: 100%;*/
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .swiper {
+        width: 100%;
+        height: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .swiper-slide {
+        background-size: cover;
+        background-position: center;
+    }
+
+    .mySwiper2 {
+        width: 800px;
+        height: 500px;
+    }
+
+    .mySwiper {
+        height: 100px;
+        width: 500px;
+        box-sizing: border-box;
+        padding: 10px 0;
+    }
+
+        .mySwiper .swiper-slide {
+            width: 25%;
+            height: 100%;
+            opacity: 0.6;
+        }
+
+        .mySwiper .swiper-slide-thumb-active {
+            opacity: 1;
+            border: 1px solid #dc3545;
+        }
+
+    .swiper-slide img {
+        display: block;
+        object-fit: cover;
+    }
+
+    .swiper-button-next:after,
+    .swiper-button-prev:after {
+        font-size: 25px;
+    }
+</style>
+
+
+<div class="container single_product_container" style="margin-top: 130px">
+    <div class="row">
+        <div class="col">
+
+            <!-- Breadcrumbs -->
+
+            <div class="breadcrumbs d-flex flex-row align-items-center">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a asp-controller="Product" asp-action="ProductCategory" asp-route-slug="@ViewBag.categorySlug"><i class="fa fa-angle-right" aria-hidden="true"></i>@ViewBag.categoryName</a></li>
+                    <li class="active"><a asp-controller="Product" asp-action="Detail" asp-route-slug="@Model.Slug" asp-route-id="@Model.Id"><i class="fa fa-angle-right" aria-hidden="true"></i>@Model.Name</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="single_product_pics">               
+                @await Component.InvokeAsync(typeof(ProductImageViewComponent), new{productId = Model.Id})
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="product_details">
+                <div class="product_details_title">
+                    <h2>@Model.Name</h2>
+                    <p>Tác giả:  <span style="font-weight: bold">@Model.Author</span></p>
+                    <p>Thể loại: <span style="font-weight: bold">@Model.CategoryName</span></p>
+                    <p>Nhà cung cấp:  <span style="font-weight: bold">@Model.SupplierName</span></p>
+                </div>
+                <div class="free_delivery d-flex flex-row align-items-center justify-content-center" style="margin-top: 20px; margin-bottom: 15px">
+                    <i class="fa fa-truck" aria-hidden="true"></i><span style="padding-left: 10px"> Giao hàng tiêu chuẩn</span>
+                </div>
+                @if (Model.Discount > 0)
+                {
+                    <div class="original_price">@ExtensionHelper.ToVnd(Model.Price)</div>
+                    <div class="product_price">@ExtensionHelper.ToVnd(Model.Price - (Model.Price*(decimal)0.01*Model.Discount))</div>
+                }
+                else
+                {
+                    <div class="product_price">@ExtensionHelper.ToVnd(Model.Price)</div>
+                }
+
+                <ul class="star_rating @ViewBag.rating">
+                    @for (int i = 0; i <= ViewBag.rating-1; i++)
+                    {
+                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                    }
+                    @for (int i = 0; i < (5 - ViewBag.rating); i++)
+                    {
+                        <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                    }
+                </ul>           
+                <div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
+                    <span>Quantity:</span>
+                    <div class="quantity_selector">
+                        <span class="minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                        <span id="quantity_value" data-id="@Model.Quantity">1</span>
+                       @* <input id="quantity_value" data-id="@Model.Quantity" type="number" value="1" min="1"  />*@
+                        <span class="plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                    </div>
+                    <div class="red_button add_to_cart_button"><a class="btnAddToCart" href="#" data-id="@Model.Id">add to cart</a></div>
+                    <div class="product_favorite d-flex flex-column align-items-center justify-content-center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Tabs -->
+
+<div class="tabs_section_container">
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="tabs_container">
+                    <ul class="tabs d-flex flex-sm-row flex-column align-items-left align-items-md-center justify-content-center">
+                        <li class="tab  active" data-active-tab="tab_3"><span style="font-size: 20px">Reviews</span></li>
+                        <li class="tab" data-active-tab="tab_1"><span style="font-size: 20px">Description</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+
+                <!-- Tab Reviews -->
+
+                <div id="tab_3" class="tab_container active">
+                    <div class="row">
+
+                        <!-- User Reviews -->
+                        <div class="col-lg-6 reviews_col">
+                            @await Component.InvokeAsync(typeof(ReviewViewComponent), new{productId = Model?.Id});
+                        </div>
+
+                        <!-- Add Review -->
+
+                        <div class="col-lg-6 add_review_col">
+
+                            <div class="add_review">
+                                <form id="review_form" action="post">
+                                    <h1>Add Review</h1>
+                                    <p class="text-danger" id="review_error"></p>
+                                    <div>
+                                        Your Rating:
+                                        <ul class="user_star_rating">
+                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                            <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                            <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                        </ul>
+                                        <input type="hidden" id="rating_value" value="3" />
+                                        <input type="hidden" id="user_id" value="@loggedInUser?.Id" />
+                                        <input type="hidden" id="product_id" value="@Model?.Id" />
+                                        <textarea id="review_message" class="input_review" name="message" placeholder="Your Review" rows="4" required data-error="Please, leave us a review."></textarea>
+                                    </div>
+                                    <div class="text-left text-sm-right">
+                                        <button id="review_submit" type="submit" class="red_button review_submit_btn trans_300" value="Submit">submit</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Tab Description -->
+
+                <div id="tab_1" class="tab_container">
+                    <div class="row">
+                        @Html.Raw(Model.Description)
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+@section scripts{
+    <script src="~/client/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+    <script src="~/client/js/single_custom.js"></script>
+
+
+
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            spaceBetween: 10,
+            slidesPerView: 4,
+            freeMode: true,
+            watchSlidesProgress: true,
+        });
+        var swiper2 = new Swiper(".mySwiper2", {
+            spaceBetween: 10,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            thumbs: {
+                swiper: swiper,
+            },
+        });
+    </script>
+}

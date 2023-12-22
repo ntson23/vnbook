@@ -1,0 +1,66 @@
+﻿@model WebBook.Models.Category
+
+@{
+    ViewData["Title"] = "DANH MỤC SẢN PHẨM";
+}
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>@ViewData["Title"]</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Category" asp-action="Index">@ViewData["Title"]</a></li>
+                    <li class="breadcrumb-item active">Sửa</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <!-- Default box -->
+    <div class="card card-success">
+        <div class="card-header">
+            <h3 class="card-title">CHỈNH SỬA @ViewData["Title"]</h3>
+        </div>
+        <div class="card-body">
+            <div class="bs-stepper-content">
+                <!-- your steps content here -->
+                <form asp-action="Edit" asp-controller="Category" asp-area="Admin" method="post" enctype="multipart/form-data">
+                    <input asp-for="CreatedDate" type="hidden" class="form-control">
+                    <input asp-for="CreatedBy" type="hidden" class="form-control">
+                    <div class="form-group">
+                        <label>Tên</label>
+                        <input asp-for="Name" type="text" class="form-control">
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Mô tả</label>
+                        <textarea asp-for="Description" class="form-control" rows="30"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <a asp-action="Index" class="btn btn-primary" onclick="stepper.previous()">Quay lại</a>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+        </div>
+        <!-- /.card-footer-->
+    </div>
+    <!-- /.card -->
+
+</section>

@@ -1,0 +1,66 @@
+﻿@model IEnumerable<WebBook.Models.ProductImage>
+
+<div class="card">
+    <div class="card-header p-2">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link active">Image</a>
+            </li>
+        </ul>
+    </div>
+    <div class="card-body">
+        @if(Model.FirstOrDefault(x=>x.IsAvatar) != null)
+        {
+            <img id="main-image" src="~/uploads/images/product/@Model.FirstOrDefault(x=>x.IsAvatar)!.ImageName" class="img-fluid" />
+        }
+        else
+        {
+            <img id="main-image" class="img-fluid" />
+        }
+        <hr />
+        <input type="file" id="uploadFile" style="display: none" />
+        <a class="btn btn-primary btn-sm mb-2" id="upload-img">
+            <i class="fas fa-upload"></i>
+            <span>Upload Image</span>
+        </a>
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th class="text-center">Image</th>
+                    <th class="text-center">Avatar</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbodyHtml">
+                @foreach(var item in Model)
+                {
+                    <tr id="row-@item.Id">
+                        <td>@item.Id</td>
+                        <td class="text-center">
+                            <img id="image-@item.Id" width="100" src="~/uploads/images/product/@item.ImageName" />
+                        </td>
+                        <td class="text-center">
+                            <div class="icheck-success d-inline">
+                                @if(item.IsAvatar){
+                                    <input type="radio" checked name="isDefault" class="rdoDefault" id="rdo-@item.Id">
+                                }
+                                else{
+                                    <input type="radio" name="isDefault" class="rdoDefault" id="rdo-@item.Id">
+                                }
+                               
+                                <label for="rdo-@item.Id"></label>
+                            </div>
+                        </td>
+                        <td class="pt-3">
+                            <a id="deleteImage" data-id="@item.Id" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

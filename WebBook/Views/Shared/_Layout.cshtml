@@ -1,0 +1,151 @@
+﻿@using WebBook.ViewComponents
+@using WebBook.Common
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewData["Title"] - VNBook</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Colo Shop Template">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/client/styles/bootstrap4/bootstrap.min.css">
+    <link href="~/client/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="~/client/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="~/client/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="~/client/plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <link href="~/client/styles/my_styles.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+
+<body>
+
+    <div class="super_container">
+
+        <!-- Header -->
+
+        <header class="header trans_300">
+
+            <!-- Top Navigation -->
+
+            <div class="top_nav">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="top_nav_left">freeship tận nhà, flashsale 40%</div>
+                        </div>                       
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Navigation -->
+            @await Component.InvokeAsync(typeof(MenuViewComponent), new{name="Menu"})
+
+        </header>
+
+
+
+        @RenderBody()
+        <!-- Slider -->
+        <!-- Newsletter -->
+        <div class="newsletter">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="newsletter_text d-flex flex-column justify-content-center align-items-lg-start align-items-md-center text-center">
+                            <h4>Newsletter</h4>
+                            <p>Đăng ký nhận bản tin</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <form>
+                            <div class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-lg-end justify-content-center">
+                                <span class="text-danger validEmail"></span>
+                                <input id="newsletter_email" type="email" placeholder="Your email" required="required" data-error="Valid email is required.">
+                                <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit">subscribe</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+
+        <footer class="footer"  style="background: #1e1e27; color: #b5aec4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4" style="padding-top: 25px">
+                        <h5 style="color: #b5aec4">DỊCH VỤ</h5>
+                            <ul>
+                                <li style="padding-top: 5px">Điều khoản sử dụng</li>
+                                <li style="padding-top: 5px">Chính sách bảo mật thông tin cá nhân</li>
+                                <li style="padding-top: 5px">Chính sách bảo mật thanh toán</li>
+                                <li style="padding-top: 5px">Hệ thông trung tâm - nhà sách</li>
+                            </ul>
+                    </div>
+                    <div class="col-lg-4" style="padding-top: 25px">
+                        <h5 style="color: #b5aec4">HỖ TRỢ</h5>
+                        <ul>
+                            <li style="padding-top: 5px"><a asp-controller="Home" asp-action="OrderLookup">Tra cứu đơn hàng</a></li>
+                            <li style="padding-top: 5px">Chính sách đổi trả - hoàn tiền</li>
+                            <li style="padding-top: 5px">Chính sách bảo hành</li>
+                            <li style="padding-top: 5px">Chính sách vận chuyển</li>
+                            <li style="padding-top: 5px">Chính sách thanh toán</li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4" style="padding-top: 25px">
+                        <h5 style="color: #b5aec4">LIÊN HỆ</h5>
+                        <ul>
+                            <li style="padding-top: 5px"><i class="fa fa-map-marker"></i> Địa chỉ: Đại học Xây Dựng Hà Nội</li>
+                            <li style="padding-top: 5px"><i class="fa fa-phone"></i> Điện thoại: 0818695268</li>
+                            <li style="padding-top: 5px"><i class="fa fa-facebook"></i> Facebook: Nguyễn Tùng Sơn</li>
+                            <li style="padding-top: 5px"><i class="fa fa-envelope"></i> Email: ntson230801@gmail.com</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 130px; border-top: 1px solid #b5aec4">
+                    <div class="col-lg-12">
+                        <div>
+                            <div class="cr">©2024 All Rights Reserverd.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+   @* <script src="https://widget.flowxo.com/embed.js" data-fxo-widget="eyJ0aGVtZSI6IiM2N2MxOGUiLCJ3ZWIiOnsiYm90SWQiOiI2NDUwODBiYzkxMmI5ZTAwMmUxNTg4MWEiLCJ0aGVtZSI6IiM2N2MxOGUifX0=" async defer></script>
+*@
+    <script src="~/client/js/jquery-3.2.1.min.js"></script>
+    <script src="~/client/styles/bootstrap4/popper.js"></script>
+    <script src="~/client/styles/bootstrap4/bootstrap.min.js"></script>
+    <script src="~/client/plugins/Isotope/isotope.pkgd.min.js"></script>
+    <script src="~/client/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+    <script src="~/client/plugins/easing/easing.js"></script>
+    <script src="~/client/js/custom.js"></script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    <script src="~/client/js/my_scripts.js"></script>
+    <script src="~/client/js/cart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+    @await Component.InvokeAsync("Notyf")
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <df-messenger intent="WELCOME"
+                  chat-title="VNBOOK"
+                  agent-id="f51e27b3-6107-4739-b6a9-1c40ab25d5be"
+                  language-code="vi"></df-messenger>
+</body>
+
+</html>
+
+
+

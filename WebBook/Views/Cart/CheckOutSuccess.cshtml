@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Thanh toán";
+}
+
+<link rel="stylesheet" type="text/css" href="~/client/styles/single_styles.css">
+<link rel="stylesheet" type="text/css" href="~/client/styles/single_responsive.css">
+
+
+<div class="container single_product_container" style="margin-top: 130px">
+    <div class="row">
+        <div class="col">
+
+            <!-- Breadcrumbs -->
+
+            <div class="breadcrumbs d-flex flex-row align-items-center">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a asp-controller="Cart" asp-action="Index"><i class="fa fa-angle-right" aria-hidden="true"></i>Cart</a></li>
+                    <li class="active"><a asp-controller="Cart" asp-action="CheckOut"><i class="fa fa-angle-right" aria-hidden="true"></i>CheckOut</a></li>
+                </ul>
+            </div>
+
+           <div class="row">
+               <div class="col-md-12">
+                   <h3 style="color: green">ĐẶT HÀNG THÀNH CÔNG!</h3><br>
+                   <p>Chúng tôi đã gửi thông tin về đơn hàng tới địa chỉ email của bạn!<br />
+                       Đơn hàng sẽ được xử lý và giao đến bạn sớm nhất có thể. Cảm ơn bạn đã quan tâm và mua sản phẩm của chúng tôi!</p>
+               </div>
+           </div>
+        </div>
+    </div>
+</div>

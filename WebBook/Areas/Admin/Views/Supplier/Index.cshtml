@@ -1,0 +1,209 @@
+﻿@using X.PagedList
+@using X.PagedList.Mvc.Core;
+@using X.PagedList.Web.Common
+@model IPagedList<WebBook.Models.Supplier>
+
+
+@{
+    ViewData["Title"] = "NHÀ CUNG CẤP";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>@ViewData["Title"]</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">TRANG CHỦ</a></li>
+                    <li class="breadcrumb-item active">@ViewData["Title"]</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <a asp-area="Admin" asp-controller="Supplier" asp-action="Create" class="btn btn-sm btn-primary">Thêm mới</a>
+                            <a href="#" class="btn btn-sm btn-danger" id="btnDeleteAll">Xóa tất cả</a>
+                        </div>
+                        <div class="card-tools">
+                            <form asp-area="Admin" asp-action="Index" asp-controller="Supplier" class="input-group input-group-sm" style="width: 250px;">
+                                <input type="text" name="searchString" class="form-control float-right" placeholder="Search" value="@ViewBag.CurrentFilter">
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-default" style="width: 70px">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20px;"><input type="checkbox" id="SelectAll" /></th>
+                                    <th>STT</th>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>Created Date</th>
+                                    <th>Created By</th>
+                                    <th>Modifed Date</th>
+                                    <th>Modified By</th>
+                                    <th style="text-align:center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    var stt = 1;
+                                    foreach (var item in Model)
+                                    {
+                                        if (ViewBag.Page > 1)
+                                        {
+                                            stt = ViewBag.PageSize * (ViewBag.Page - 1) + 1;
+                                        }
+                                        <tr id="trow_@item.Id">
+                                            <td style="width: 20px"><input type="checkbox" value="@item.Id" /></td>
+                                            <td>@stt</td>
+                                            <td>@item.Name</td>
+                                            <td>@item.Phone</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.Address</td>
+                                            <td>@item.CreatedDate.ToString("dd/MM/yyyy")</td>
+                                            <td>@item.CreatedBy</td>
+                                            <td>@item.ModifiedDate.ToString("dd/MM/yyyy")</td>
+                                            <td>@item.ModifiedBy</td>
+                                            <td style="text-align:center">
+                                                <a class="btn btn-sm btn-success" asp-area="Admin" asp-action="Edit" asp-controller="Supplier" asp-route-id="@item.Id">
+                                                    <i class="fas fa-pencil-alt"></i>
+                                                    Chỉnh sửa</a>
+                                                <a class="btn btn-sm btn-danger btnDelete" href="#" data-id="@item.Id">
+                                                    <i class="fas fa-trash"></i>
+                                                    Xóa
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        stt++;
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="4">Không có dữ liệu</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <div class="row float-right">
+                            @* Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount*@
+                            @Html.PagedListPager(Model, page=> Url.Action("Index",new{Area="Admin", page, currentFilter = ViewBag.CurrentFilter}),
+                            new PagedListRenderOptions{
+                            LiElementClasses = new string[] { "page-item" },
+                            PageClasses = new string[] { "page-link" }
+                            })
+                        </div>
+                    </div>
+                    <!--/.card-footer -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            $('body').on('click', '#btnDeleteAll', function (e) {
+                e.preventDefault();
+                var str = "";
+                var checkbox = $(this).parents('.card').find('tr td input:checkbox');
+                var i = 0;
+                checkbox.each(function () {
+                    if (this.checked) {
+                        checkbox.attr('selected', 'checked');
+                        var _id = $(this).val();
+                        if (i == 0) {
+                            str += _id;
+                        }
+                        else {
+                            str += "," + _id;
+                        }
+                        i++;
+                    }
+                    else {
+                        checkbox.attr('selected', '');
+
+                    }
+                });
+                if (str.length > 0) {
+                    var conf = confirm("Bạn có chắc chắn muốn xóa tất cả?");
+                    if (conf == true) {
+                        $.ajax({
+                            url: '/admin/supplier/deleteAll',
+                            type: 'POST',
+                            data: { ids: str },
+                            success: function (rs) {
+                                if (rs.success) {
+                                    location.reload();
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+
+
+            $('body').on('change', '#SelectAll', function () {
+                var checkStatus = this.checked;
+                var checkbox = $(this).parents('.card-body').find('tr td input:checkbox');
+                checkbox.each(function () {
+                    this.checked = checkStatus;
+                    if (this.checked) {
+                        checkbox.attr('selected', 'checked');
+                    }
+                    else {
+                        checkbox.attr('selected', '');
+                    }
+                });
+            });
+
+
+
+            $('body').on('click', '.btnDelete', function () {
+                var id = $(this).data('id');
+                var conf = confirm('Bạn có chắc chắn muốn xóa?');
+                if (conf == true) {
+                    $.ajax({
+                        url: '/admin/supplier/delete',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                $('#trow_' + id).remove();
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

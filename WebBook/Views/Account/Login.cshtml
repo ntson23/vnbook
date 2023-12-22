@@ -1,0 +1,49 @@
+﻿@using WebBook.Common
+@using WebBook.Data
+@model WebBook.ViewModels.LoginVM
+
+
+@{
+    ViewData["Title"] = "Đăng nhập";
+}
+
+<link rel="stylesheet" type="text/css" href="~/client/styles/single_styles.css">
+<link rel="stylesheet" type="text/css" href="~/client/styles/single_responsive.css">
+
+
+<div class="container single_product_container" style="margin-top: 130px">
+    <div class="row">
+        <div class="col">
+
+            <!-- Breadcrumbs -->
+
+          
+            <div class="row" style="margin-bottom: 15px">
+                <div style="border-bottom: 1px solid #ced4da;">
+                    <h5>ĐĂNG NHẬP</h5>
+                </div>
+            </div>
+            <form type="POST" enctype="multipart/form-data" asp-controller="Account" asp-action="Login" asp-route-returnUrl="@ViewBag.returnUrl">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label>Username</label>
+                            <input asp-for="Username" type="text" class="form-control" placeholder="User name" />
+                            <span asp-validation-for="Username" class="checkout_validation"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Nhập mật khẩu" />
+                            <span asp-validation-for="Password" class="checkout_validation"></span>
+                        </div>
+                         <div class="form-group">
+                            <button style="cursor: pointer; margin-bottom: 10px" type="submit" class="btn btn-danger">Đăng nhập</button>
+                            <p> <a asp-controller="Account" asp-action="ForgotPassword" style="color: blue">Bạn quên mật khẩu?</a></p>
+                            <p>Bạn chưa có tài khoản?<a style="color: blue" asp-controller="Account" asp-action="Register"> Tạo tài khoản mới</a></p>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
