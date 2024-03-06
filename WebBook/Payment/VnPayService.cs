@@ -29,10 +29,8 @@ namespace WebBook.Payment
             pay.AddRequestData("vnp_IpAddr", pay.GetIpAddress(context));
             pay.AddRequestData("vnp_Locale", _configuration["Vnpay:Locale"]);
             pay.AddRequestData("vnp_OrderInfo", $"{model.CustomerName}");
-            pay.AddRequestData("vnp_OrderType", _configuration["Vnpay:OrderType"]);
-            //pay.AddRequestData("vnp_BankCode", _configuration["Vnpay:BankCode"]);
+            pay.AddRequestData("vnp_OrderType", _configuration["Vnpay:OrderType"]);            
             pay.AddRequestData("vnp_ReturnUrl", urlCallBack);
-            //pay.AddRequestData("vnp_TxnRef", tick + model.Id.ToString());
             pay.AddRequestData("vnp_TxnRef", model.Id.ToString());
 
             var paymentUrl =

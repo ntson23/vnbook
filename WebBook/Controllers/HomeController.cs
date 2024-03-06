@@ -102,13 +102,6 @@ namespace WebBook.Controllers
             return View("~/Views/Account/OrderDetail.cshtml", order);
         }
 
-
-
-
-
-
-
-
         public IActionResult Privacy()
         {
             return View();

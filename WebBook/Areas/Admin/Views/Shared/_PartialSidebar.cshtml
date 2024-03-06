@@ -5,50 +5,29 @@
         <li class="nav-item">
             <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
-                <p>Dashboard</p>
+                <p>Tổng quan</p>
             </a>
         </li>
         <li class="nav-item">
             <a asp-area="Admin" asp-controller="User" asp-action="Index" class="nav-link">
                 <i class="nav-icon fas fa-user"></i>
-                <p>User</p>
+                <p>Người dùng</p>
             </a>
         </li>
 
-      @*  <li class="nav-item">
-            <a asp-area="Admin" asp-controller="Menu" asp-action="Index" class="nav-link">
-                <i class="nav-icon fas fa-table"></i>
-                <p>Menu</p>
-            </a>
-        </li>*@
-
-      @*  <li class="nav-item">
-            <a asp-area="Admin" asp-action="Index" asp-controller="News" class="nav-link">
-                <i class="nav-icon fas fa-copy"></i>
-                <p>
-                    News
-                    <span class="right badge badge-danger">New</span>
-                </p>
-            </a>
-        </li>*@
 
         <li class="nav-item">
             <a asp-area="Admin" asp-controller="Post" asp-action="Index" class="nav-link">
                 <i class="nav-icon fas fa-file"></i>
-                <p>Post</p>
+                <p>Bài đăng</p>
             </a>
         </li>
 
-      @*  <li class="nav-item">
-            <a href="../widgets.html" class="nav-link">
-                <i class="nav-icon far fa-image"></i>
-                <p>Event</p>
-            </a>
-        </li>*@
+      
         <li class="nav-item">
             <a asp-area="Admin" asp-controller="Supplier" asp-action="Index" class="nav-link">
                 <i class=" nav-icon far fa-plus-square"></i>
-                <p>Supplier</p>
+                <p>Nhà cung cấp</p>
             </a>
         </li>
        
@@ -56,7 +35,7 @@
             <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
-                    Product Management
+                    Quản lý sản phẩm
                     <i class="right fas fa-angle-left"></i>
                 </p>
             </a>
@@ -64,13 +43,13 @@
                 <li class="nav-item">
                     <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Category</p>
+                        <p>Danh mục sản phẩm</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="nav-link">
                         <i class="far fa-circle nav-icon"></i>
-                        <p>Product</p>
+                        <p>Sản phẩm</p>
                     </a>
                 </li>
             </ul>
@@ -80,7 +59,7 @@
             <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="nav-link">
                  <i class="nav-icon fas fa-table"></i>
                 <p>
-                    Order
+                    Đơn hàng
                     <span class="right badge badge-danger">@ViewBag.newOrder</span>
                 </p>
             </a>
@@ -97,7 +76,7 @@
             <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-cog"></i>
                 <p>
-                    System
+                    Hệ thống
                     <i class="right fas fa-angle-left"></i>
                 </p>
             </a>
@@ -105,13 +84,13 @@
                 <li class="nav-item">
                     <a asp-area="Admin" asp-controller="Menu" asp-action="Index" class="nav-link">
                         <i class="nav-icon fas fa-edit"></i>
-                        <p>Menu</p>
+                        <p>Lối tắt</p>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a asp-area="Admin" asp-controller="Event" asp-action="Index" class="nav-link">
                         <i class="nav-icon far fa-image"></i>
-                        <p>Event</p>
+                        <p>Sự kiện</p>
                     </a>
                 </li>
             </ul>
@@ -120,7 +99,7 @@
         <li class="nav-item">
             <a asp-area="Admin" asp-controller="Feedback" asp-action="Index" class="nav-link">
                 <i class="nav-icon far fa-envelope"></i>
-                <p>Feedback</p>
+                <p>Đánh giá</p>
             </a>
         </li>
        

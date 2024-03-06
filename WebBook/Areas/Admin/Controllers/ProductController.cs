@@ -129,14 +129,14 @@ namespace WebBook.Areas.Admin.Controllers
                 await _context.Products!.AddAsync(model);
                 await _context.SaveChangesAsync();
 
-                _notifyService.Success("Product created successfully!");
+                _notifyService.Success("Thêm mới sản phẩm thành công!");
                 return RedirectToAction("Index", "product", new {area="admin"});
             }
 
 
             ViewBag.CategoryList = new SelectList(_context.Categories!.ToList(), "Id", "Name");
             ViewBag.SupplierList = new SelectList(_context.Suppliers!.ToList(), "Id", "Name");
-            _notifyService.Error("Product created failed!");
+            _notifyService.Error("Thêm mới sản phẩm thất bại!");
             return View(model);
 
         }
@@ -152,14 +152,11 @@ namespace WebBook.Areas.Admin.Controllers
             {
                 Id = product.Id,
                 Name = product.Name,
-                //ProductCode = product.ProductCode,
                 Description = product.Description,
-                //Detail = product.Detail,
                 NumberOfPage = product.NumberOfPage,
                 Author = product.Author,
                 Price = product.Price,
                 Discount = product.Discount,
-                //PriceSale = product.PriceSale,
                 Quantity = product.Quantity,
                 IsFeature = product.IsFeature,
                 IsHome = product.IsHome,
@@ -167,10 +164,6 @@ namespace WebBook.Areas.Admin.Controllers
                 IsSale = product.IsSale,
                 CategoryId = product.CategoryId,
                 SupplierId = product.SupplierId,
-               
-                //SeoTitle = product.SeoTitle,
-                //SeoDescription = product.SeoDescription,
-                //SeoKeywords = product.SeoKeywords
             };
 
             ViewBag.CategoryList = new SelectList(_context.Categories!.ToList(), "Id", "Name");
@@ -189,14 +182,11 @@ namespace WebBook.Areas.Admin.Controllers
 
                 product!.Name = vm.Name;
                 product.Slug = SeoUrlHelper.FrientlyUrl(product.Name);
-               // product.ProductCode = vm.ProductCode;
-                product.Description = vm.Description;
-               // product.Detail = vm.Detail;
-                product.NumberOfPage = vm.NumberOfPage;
+              product.Description = vm.Description;
+               product.NumberOfPage = vm.NumberOfPage;
                 product.Author = vm.Author;
                 product.Price = vm.Price;
                 product.Discount = vm.Discount;
-                //product.PriceSale = vm.PriceSale;
                 product.Quantity = vm.Quantity;
                 product.IsFeature = vm.IsFeature;
                 product.IsHome = vm.IsHome;
@@ -204,18 +194,15 @@ namespace WebBook.Areas.Admin.Controllers
                 product.IsSale = vm.IsSale;
                 product.CategoryId = vm.CategoryId;
                 product.SupplierId = vm.SupplierId;
-                //product.SeoTitle = vm.SeoTitle;
-                //product.SeoDescription = vm.SeoDescription;
-                //product.SeoKeywords = vm.SeoKeywords;
                 product.ModifiedDate = DateTime.Now;
                 product.ModifiedBy = loggedInUser?.FullName;
 
                 await _context.SaveChangesAsync();
-                _notifyService.Success("Product updated successfully!");
+                _notifyService.Success("Cập nhật sản phẩm thành công!");
                 return RedirectToAction("Index", "product", new { area = "admin" });
             }
 
-            _notifyService.Error("Product updated failed!");
+            _notifyService.Error("Cập nhật sản phẩm thất bại!");
             return View(vm);
         }
 
@@ -235,10 +222,10 @@ namespace WebBook.Areas.Admin.Controllers
                 }
                 _context.Products!.Remove(product);
                 _context.SaveChanges();
-                _notifyService.Success("Product deleted successfully!");
+                _notifyService.Success("Xóa sản phẩm thành công!");
                 return Json(new { success = true });
             }
-            _notifyService.Error("Product deleted failed!");
+            _notifyService.Error("Xóa sản phẩm thất bại!");
             return Json(new { success = false });
 
         }

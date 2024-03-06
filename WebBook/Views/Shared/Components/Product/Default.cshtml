@@ -7,7 +7,9 @@
         <div class="product-item @item.CategorySlug">
             <div class="product discount product_filter">
                 <div class="product_image">
-                    <img src="~/uploads/images/product/@item.Avatar" alt="@item.Name">
+                    <a asp-controller="Product" asp-action="Detail" asp-route-slug="@item.Slug" asp-route-id="@item.Id">
+                    <img src="~/uploads/images/product/@item.Avatar" alt="@item.Name" asp-action="Detail">
+                    </a>
                 </div>
                 <div class="favorite favorite_left"></div>
                 @if (item.Discount > 0)
@@ -29,11 +31,11 @@
             </div>
             @if (item.Quantity > 0)
             {
-                <div class="red_button add_to_cart_button"><a class="btnAddToCart" href="#" data-id="@item.Id">add to cart</a></div>
+                <div class="red_button add_to_cart_button"><a class="btnAddToCart" href="#" data-id="@item.Id">Thêm vào giỏ hàng</a></div>
             }
             else
             {
-                <div class="red_button add_to_cart_button"><a>out of stock</a></div>
+                <div class="red_button add_to_cart_button"><a>Hết hàng</a></div>
             }
         </div>
     }

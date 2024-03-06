@@ -110,7 +110,7 @@ namespace WebBook.Areas.Admin.Controllers
                 return RedirectToAction("Index", "supplier", new { area = "admin" });
             }
 
-            _notifyService.Error("Supplier updated failed!");
+            _notifyService.Error("Lỗi!");
             return View(model);
         }
 
@@ -122,12 +122,12 @@ namespace WebBook.Areas.Admin.Controllers
             {
                 _context.Suppliers.Remove(supplier);
                 _context.SaveChanges();
-                _notifyService.Success("Supplier deleted successfully!");
+                _notifyService.Success("Xóa thành công nhà cung cấp");
 
                 return Json(new { success = true });
             }
 
-            _notifyService.Error("Supplier deleted failed!");
+            _notifyService.Error("Lỗi");
             return Json(new { success = false });
         }
 
@@ -147,11 +147,11 @@ namespace WebBook.Areas.Admin.Controllers
                     }
                 }
 
-                _notifyService.Success("The selected supplier has been deleted successfully!");
+                _notifyService.Success("Đã xóa nhà cung cấp được chọn");
                 return Json(new { success = true });
             }
 
-            _notifyService.Error("The selected supplier has been deleted failed!");
+            _notifyService.Error("Lỗi");
             return Json(new { success = false });
         }
     }

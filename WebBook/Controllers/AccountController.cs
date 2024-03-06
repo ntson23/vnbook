@@ -113,7 +113,7 @@ namespace WebBook.Controllers
                 await _userManager.AddToRoleAsync(applicationUser, WebsiteRoles.Customer);
 
                 _notifyService.Success("Đăng ký tài khoản thành công!");
-                return View();
+                return RedirectToAction("Login", "Account");
             }
             return View(vm);
         }
@@ -237,14 +237,6 @@ namespace WebBook.Controllers
 
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-
-                //var callbackUrl = Url.Page(
-                //    "/Account/ResetPassword",
-                //    pageHandler: null,
-                //    values: new { code },
-                //    protocol: Request.Scheme
-                //    );
-
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { code = code }, protocol:Request.Scheme);
 
                 _emailService.Send("VNBOOK", "Đặt lại mật khẩu", $"Để đặt lại mật khẩu hãy <a href='{callbackUrl}'>Bấm vào đây</a>.", vm.Email);
@@ -273,12 +265,7 @@ namespace WebBook.Controllers
 
         [HttpPost]
         public async Task<IActionResult> ResetPassword(ResetPasswordVM vm)
-        {
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(vm);
-            //}
-
+        {           
             //Tim user theo email
             var user = await _userManager.FindByEmailAsync(vm.Email);
             if (user == null)

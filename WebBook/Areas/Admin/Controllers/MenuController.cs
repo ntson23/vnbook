@@ -75,7 +75,7 @@ namespace WebBook.Areas.Admin.Controllers
 
                 await _context.Menus!.AddAsync(model);
                 await _context.SaveChangesAsync();
-                _notifyService.Success("Menu created successfully!");
+                _notifyService.Success("Tạo lối tắt thành công!");
                 
                 return RedirectToAction("Index", "menu", new
                 {
@@ -83,7 +83,7 @@ namespace WebBook.Areas.Admin.Controllers
                 });
             }
 
-            _notifyService.Error("Menu created failed!");
+            _notifyService.Error("Tạo lối tắt thất bại");
             return View(model);
 
         }
@@ -111,14 +111,14 @@ namespace WebBook.Areas.Admin.Controllers
                 _context.Menus.Update(model);
                 await _context.SaveChangesAsync();
               
-                _notifyService.Success("Menu updated successfully!");
+                _notifyService.Success("Cập nhật lối tắt thành công!");
                 return RedirectToAction("Index", "menu", new
                 {
                     area = "admin"
                 });
             }
 
-            _notifyService.Error("Menu updated failed!");
+            _notifyService.Error("Cập nhật lối tắt thất bại!");
             return View(model);
         }
 
@@ -130,12 +130,12 @@ namespace WebBook.Areas.Admin.Controllers
             {
                 _context.Menus.Remove(menu);
                 _context.SaveChanges();
-                _notifyService.Success("Menu deleted successfully!");
+                _notifyService.Success("Xóa lối tắt thành công!");
 
                 return Json(new { success = true });
             }
 
-            _notifyService.Error("Menu deleted failed!");
+            _notifyService.Error("Xóa lối tắt thất bại!");
             return Json(new { success = false });
         }
 
@@ -155,11 +155,11 @@ namespace WebBook.Areas.Admin.Controllers
                     }
                 }
 
-                _notifyService.Success("The selected menu has been deleted successfully!");
+                _notifyService.Success("Xóa tất cả lối tắt thành công!");
                 return Json(new { success = true });
             }
 
-            _notifyService.Error("The selected menu has been deleted failed!");
+            _notifyService.Error("Xóa tất cả lối tắt thất bại!");
             return Json(new { success = false });
         }
     }

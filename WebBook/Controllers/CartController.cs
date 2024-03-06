@@ -53,9 +53,9 @@ namespace WebBook.Controllers
         [Route("cart/checkout")]
         public IActionResult CheckOut(string ids)
         {
-            if(ids == null)
+            if (!User.Identity.IsAuthenticated)
             {
-                return View();
+                return RedirectToAction("Login", "Account");
             }
             var items = ids.Split(',');
             var carts = new List<CartItem>();
@@ -164,9 +164,7 @@ namespace WebBook.Controllers
             //Gui mail 
             var strSanpham = "";
             decimal thanhtien = 0;
-
-
-            
+         
             foreach(var sp in carts)
             { 
                 strSanpham += "<tr>";

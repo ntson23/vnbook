@@ -7,7 +7,7 @@
 
 
 @{
-    ViewData["Title"] = "Post";
+    ViewData["Title"] = "BÀI ĐĂNG";
 }
 
 <!-- Content Header (Page header) -->
@@ -15,11 +15,11 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>@ViewData["Title"] Management</h1>
+                <h1>QUẢN LÝ @ViewData["Title"]</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Home" asp-action="Index">TRANG CHỦ</a></li>
                     <li class="breadcrumb-item active">@ViewData["Title"]</li>
                 </ol>
             </div>
@@ -35,8 +35,8 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="card-title">
-                            <a asp-area="Admin" asp-controller="Post" asp-action="Create" class="btn btn-sm btn-primary">Add</a>
-                            <a href="#" class="btn btn-sm btn-danger" id="btnDeleteAll">Delete All</a>
+                            <a asp-area="Admin" asp-controller="Post" asp-action="Create" class="btn btn-sm btn-primary">Thêm mới</a>
+                            <a href="#" class="btn btn-sm btn-danger" id="btnDeleteAll">Xóa tất cả</a>
                         </div>
                         <div class="card-tools">
                             <form asp-area="Admin" asp-action="Index" asp-controller="Post" class="input-group input-group-sm" style="width: 250px;">
@@ -56,13 +56,13 @@
                                 <tr>
                                     <th style="width: 20px;"><input type="checkbox" id="SelectAll" /></th>
                                     <th>STT</th>
-                                    <th>Image</th>
-                                    <th>Title</th>
-                                    <th>Created Date</th>
-                                    <th>Created By</th>
-                                    <th>Modifed Date</th>
-                                    <th>Modifed By</th>
-                                    <th style="text-align:center">Action</th>
+                                    <th>Ảnh</th>
+                                    <th>Tiêu đề</th>
+                                    <th>Ngày tạo</th>
+                                    <th>Người tạo</th>
+                                    <th>Ngày chỉnh sửa</th>
+                                    <th>Người chỉnh sửa</th>
+                                    <th style="text-align:center">Tác vụ</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -88,11 +88,11 @@
                                             <td style="text-align:center">
                                                 <a class="btn btn-sm btn-success" asp-area="Admin" asp-action="Edit" asp-controller="Post" asp-route-id="@item.Id">
                                                     <i class="fas fa-pencil-alt"></i>
-                                                    Edit
+                                                    Chỉnh sửa
                                                 </a>
                                                 <a class="btn btn-sm btn-danger btnDelete" href="#" data-id="@item.Id">
                                                     <i class="fas fa-trash"></i>
-                                                    Delete
+                                                    Xóa
                                                 </a>
                                             </td>
                                         </tr>
@@ -102,7 +102,7 @@
                                 else
                                 {
                                     <tr>
-                                        <td colspan="4">There are no records!</td>
+                                        <td colspan="4">Không có dữ liệu!</td>
                                     </tr>
                                 }
                             </tbody>
@@ -155,7 +155,7 @@
                     }
                 });
                 if (str.length > 0) {
-                    var conf = confirm("Do you want to delete all selected records?");
+                    var conf = confirm("Bạn có chắc chắn muốn xóa tất cả?");
                     if (conf == true) {
                         $.ajax({
                             url: '/admin/Post/deleteAll',
@@ -190,7 +190,7 @@
 
             $('body').on('click', '.btnDelete', function () {
                 var id = $(this).data('id');
-                var conf = confirm('Do you want to delete this record??');
+                var conf = confirm('Bạn có chắc chắn muốn xóa?');
                 if (conf == true) {
                     $.ajax({
                         url: '/admin/Post/delete',

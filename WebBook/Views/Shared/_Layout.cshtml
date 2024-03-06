@@ -16,8 +16,19 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
     <link href="~/client/styles/my_styles.css" rel="stylesheet" type="text/css" />
 
-</head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SW26N7SJBD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
+        gtag('config', 'G-SW26N7SJBD');
+    </script>
+
+    <!--Start of Fchat.vn-->
+    <script type="text/javascript" src="https://cdn.fchat.vn/assets/embed/webchat.js?id=659360a1d9ab585827633cf6" async="async"></script><!--End of Fchat.vn-->
+    </head>
 
 <body>
 
@@ -28,16 +39,6 @@
         <header class="header trans_300">
 
             <!-- Top Navigation -->
-
-            <div class="top_nav">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="top_nav_left">freeship tận nhà, flashsale 40%</div>
-                        </div>                       
-                    </div>
-                </div>
-            </div>
 
             <!-- Main Navigation -->
             @await Component.InvokeAsync(typeof(MenuViewComponent), new{name="Menu"})
@@ -138,13 +139,7 @@
     @await Component.InvokeAsync("Notyf")
     @await RenderSectionAsync("Scripts", required: false)
 
-    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-    <df-messenger intent="WELCOME"
-                  chat-title="VNBOOK"
-                  agent-id="f51e27b3-6107-4739-b6a9-1c40ab25d5be"
-                  language-code="vi"></df-messenger>
-</body>
-
+    </body>
 </html>
 
 

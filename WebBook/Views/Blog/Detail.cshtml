@@ -1,6 +1,6 @@
 ﻿@model WebBook.Models.Post
 @{
-    ViewData["Title"] = "Blog";
+    ViewData["Title"] = "BÀI ĐĂNG";
 }
 
 <link rel="stylesheet" type="text/css" href="~/client/styles/single_styles.css">
@@ -15,7 +15,7 @@
 
             <div class="breadcrumbs d-flex flex-row align-items-center">
                 <ul>
-                    <li><a href="/">Home</a></li>
+                    <li><a href="/">TRANG CHỦ</a></li>
                     <li><a asp-controller="Blog" asp-action="Index"><i class="fa fa-angle-right" aria-hidden="true"></i>Blog</a></li>
                     <li class="active"><a asp-controller="Blog" asp-action="Detail" asp-route-slug="@Model.Slug" asp-route-id="@Model.Id"><i class="fa fa-angle-right" aria-hidden="true"></i>@Model.Slug</a></li>
                 </ul>

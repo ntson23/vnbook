@@ -71,7 +71,7 @@ namespace WebBook.Areas.Admin.Controllers
 
                 await _context.Categories!.AddAsync(model);
                 await _context.SaveChangesAsync();
-                _notifyService.Success("Category created successfully!");
+                _notifyService.Success("Tạo danh mục thành công!");
 
                 return RedirectToAction("Index", "category", new
                 {
@@ -79,7 +79,7 @@ namespace WebBook.Areas.Admin.Controllers
                 });
             }
 
-            _notifyService.Error("Category created failed!");
+            _notifyService.Error("Lỗi!");
             return View(model);
 
         }
@@ -107,14 +107,14 @@ namespace WebBook.Areas.Admin.Controllers
                 _context.Categories!.Update(model);
                 await _context.SaveChangesAsync();
 
-                _notifyService.Success("Category updated successfully!");
+                _notifyService.Success("Cập nhật thành công!");
                 return RedirectToAction("Index", "category", new
                 {
                     area = "admin"
                 });
             }
 
-            _notifyService.Error("Category updated failed!");
+            _notifyService.Error("Lỗi");
             return View(model);
         }
 
@@ -126,12 +126,12 @@ namespace WebBook.Areas.Admin.Controllers
             {
                 _context.Categories.Remove(category);
                 _context.SaveChanges();
-                _notifyService.Success("Category deleted successfully!");
+                _notifyService.Success("Xóa thành công!");
 
                 return Json(new { success = true });
             }
 
-            _notifyService.Error("Category deleted failed!");
+            _notifyService.Error("Lỗi!");
             return Json(new { success = false });
         }
 
@@ -151,11 +151,11 @@ namespace WebBook.Areas.Admin.Controllers
                     }
                 }
 
-                _notifyService.Success("The selected category has been deleted successfully!");
+                _notifyService.Success("Xóa danh mục được chọn thành công!");
                 return Json(new { success = true });
             }
 
-            _notifyService.Error("The selected category has been deleted failed!");
+            _notifyService.Error("Lỗi!");
             return Json(new { success = false });
         }
     }

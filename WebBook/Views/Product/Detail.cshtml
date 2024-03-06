@@ -19,24 +19,7 @@
 <link rel="stylesheet" type="text/css" href="~/client/styles/single_responsive.css">
 
 <style>
-
-/*    #quantity_value{
-        height: 100%;
-        border: none;
-        width: 50px;
-    }
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-    input[type="number"]{
-        font-size: 20px;
-        text-align: center;
-        font-weight: 500;
-    }*/
     
-
     .swiper {
         width: 100%;
         height: 100%;
@@ -113,7 +96,7 @@
 
             <div class="breadcrumbs d-flex flex-row align-items-center">
                 <ul>
-                    <li><a href="/">Home</a></li>
+                    <li><a href="/">Trang chủ</a></li>
                     <li><a asp-controller="Product" asp-action="ProductCategory" asp-route-slug="@ViewBag.categorySlug"><i class="fa fa-angle-right" aria-hidden="true"></i>@ViewBag.categoryName</a></li>
                     <li class="active"><a asp-controller="Product" asp-action="Detail" asp-route-slug="@Model.Slug" asp-route-id="@Model.Id"><i class="fa fa-angle-right" aria-hidden="true"></i>@Model.Name</a></li>
                 </ul>
@@ -160,21 +143,79 @@
                     }
                 </ul>           
                 <div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
-                    <span>Quantity:</span>
+                    <span>Số lượng:</span>
                     <div class="quantity_selector">
                         <span class="minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
                         <span id="quantity_value" data-id="@Model.Quantity">1</span>
-                       @* <input id="quantity_value" data-id="@Model.Quantity" type="number" value="1" min="1"  />*@
                         <span class="plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
                     </div>
-                    <div class="red_button add_to_cart_button"><a class="btnAddToCart" href="#" data-id="@Model.Id">add to cart</a></div>
+                    @if (Model.Quantity > 0)
+                    {
+                        <div class="red_button add_to_cart_button"><a class="btnAddToCart" href="#" data-id="@Model.Id">Thêm vào giỏ hàng</a></div>
+                    }
+                    else
+                    {
+                        <div class="red_button add_to_cart_button"><a>Hết hàng</a></div>
+                    }
                     <div class="product_favorite d-flex flex-column align-items-center justify-content-center"></div>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
+
+<!-- Các sản phẩm cùng loại -->
+@if (ViewBag.RelatedProducts != null && ViewBag.RelatedProducts.Count > 0)
+{
+    <div class="row mt-4">
+        <div class="col">
+            <h3 style="margin-left: 50px;">Các sản phẩm cùng loại</h3>
+            <div class="row">
+                @foreach (var relatedProduct in ViewBag.RelatedProducts)
+                {
+                    <div class="col-md-3 mb-4 d-flex align-items-center justify-content-center">
+                        <div class="card">
+                            <a asp-controller="Product" asp-action="Detail" asp-route-slug="@relatedProduct.Slug" asp-route-id="@relatedProduct.Id">
+                                <img class="card-img-top" src="~/uploads/images/product/@relatedProduct.Avatar" alt="@relatedProduct.Name" style=" max-height: 350px; height: auto;">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <a asp-controller="Product" asp-action="Detail" asp-route-slug="@relatedProduct.Slug" asp-route-id="@relatedProduct.Id">
+                                        @relatedProduct.Name
+                                    </a>
+                                </h5>
+                                @if (relatedProduct.Discount > 0)
+                                {
+                                    <p class="card-text">
+                                        <span class="discounted-price">
+                                            @ExtensionHelper.ToVnd(relatedProduct.Price - (relatedProduct.Price * (decimal)0.01 * relatedProduct.Discount))
+                                        </span>
+                                        <span class="price-separator">&nbsp;&nbsp;</span>
+                                        <del class="original-price">@ExtensionHelper.ToVnd(relatedProduct.Price)</del>
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="card-text">@ExtensionHelper.ToVnd(relatedProduct.Price)</p>
+                                }
+
+                                @if (relatedProduct.Quantity > 0)
+                                {
+                                    <div class="red_button add_to_cart_button"><a class="btnAddToCart" href="#" data-id="@Model.Id">Thêm vào giỏ hàng</a></div>
+                                }
+                                else
+                                {
+                                    <div class="red_button add_to_cart_button"><a>Hết hàng</a></div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
 
 <!-- Tabs -->
 
@@ -185,18 +226,24 @@
             <div class="col">
                 <div class="tabs_container">
                     <ul class="tabs d-flex flex-sm-row flex-column align-items-left align-items-md-center justify-content-center">
-                        <li class="tab  active" data-active-tab="tab_3"><span style="font-size: 20px">Reviews</span></li>
-                        <li class="tab" data-active-tab="tab_1"><span style="font-size: 20px">Description</span></li>
-                    </ul>
+                        <li class="tab active" data-active-tab="tab_1"><span style="font-size: 20px">Mô tả</span></li>
+                        <li class="tab" data-active-tab="tab_3"><span style="font-size: 20px">Đánh giá</span></li>
+                        </ul>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col">
 
-                <!-- Tab Reviews -->
+                <!-- Tab Description -->
+                <div id="tab_1" class="tab_container active">
+                    <div class="row">
+                        @Html.Raw(Model.Description)
+                    </div>
+                </div>
 
-                <div id="tab_3" class="tab_container active">
+                <!-- Tab Reviews -->
+                <div id="tab_3" class="tab_container">
                     <div class="row">
 
                         <!-- User Reviews -->
@@ -205,15 +252,13 @@
                         </div>
 
                         <!-- Add Review -->
-
                         <div class="col-lg-6 add_review_col">
-
                             <div class="add_review">
                                 <form id="review_form" action="post">
-                                    <h1>Add Review</h1>
+                                    <h1>Nhận xét</h1>
                                     <p class="text-danger" id="review_error"></p>
                                     <div>
-                                        Your Rating:
+                                        Đánh giá của bạn:
                                         <ul class="user_star_rating">
                                             <li><i class="fa fa-star" aria-hidden="true"></i></li>
                                             <li><i class="fa fa-star" aria-hidden="true"></i></li>
@@ -224,31 +269,19 @@
                                         <input type="hidden" id="rating_value" value="3" />
                                         <input type="hidden" id="user_id" value="@loggedInUser?.Id" />
                                         <input type="hidden" id="product_id" value="@Model?.Id" />
-                                        <textarea id="review_message" class="input_review" name="message" placeholder="Your Review" rows="4" required data-error="Please, leave us a review."></textarea>
+                                        <textarea id="review_message" class="input_review" name="message" placeholder="Nhập đánh giá" rows="4" required data-error="Hãy đánh giá sản phẩm!"></textarea>
                                     </div>
                                     <div class="text-left text-sm-right">
-                                        <button id="review_submit" type="submit" class="red_button review_submit_btn trans_300" value="Submit">submit</button>
+                                        <button id="review_submit" type="submit" class="red_button review_submit_btn trans_300" value="Submit">Gửi</button>
                                     </div>
                                 </form>
                             </div>
-
                         </div>
-
                     </div>
-                </div>
-
-                <!-- Tab Description -->
-
-                <div id="tab_1" class="tab_container">
-                    <div class="row">
-                        @Html.Raw(Model.Description)
-                        
-                    </div>
-                </div>
+                </div>               
             </div>
         </div>
     </div>
-
 </div>
 
 
@@ -257,8 +290,6 @@
 @section scripts{
     <script src="~/client/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
     <script src="~/client/js/single_custom.js"></script>
-
-
 
     <script>
         var swiper = new Swiper(".mySwiper", {

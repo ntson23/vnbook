@@ -24,7 +24,7 @@ namespace WebBook.Areas.Admin.Controllers
         {
             int pageSize = 10;
             int pageNumber = page ?? 1;
-            var listFeedback = _context.Contact.OrderByDescending(x=>x.Id).ToList();
+            var listFeedback = _context.Contact?.OrderByDescending(x=>x.Id).ToList();
             return View(listFeedback.ToPagedList(pageNumber, pageSize));
         }
 

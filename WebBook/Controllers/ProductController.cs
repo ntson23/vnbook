@@ -41,7 +41,6 @@ namespace WebBook.Controllers
                     Price = item.Price,
                     Discount = item.Discount,
                     Quantity = item.Quantity,
-                   // PriceSale = item.PriceSale,
                     Avatar = _context.ProductImages.Where(x => x.ProductId == item.Id).ToList().FirstOrDefault(x => x.IsAvatar)?.ImageName,
                     CategorySlug = _context.Categories?.FirstOrDefault(x => x.Id == item.CategoryId)?.Slug,
                     Slug = item.Slug,
@@ -114,16 +113,37 @@ namespace WebBook.Controllers
                     Description = product.Description,
                     Price = product.Price,
                     Discount = product.Discount,
-                    //PriceSale = product.PriceSale,
                     Quantity = product.Quantity,
                     Avatar = _context.ProductImages.FirstOrDefault(x => x.ProductId == product.Id && x.IsAvatar)?.ImageName,
-                    //Detail = product.Detail,
                     Author = product.Author,
                     CategoryId = product.CategoryId,
                     SupplierId = product.SupplierId,
                     CategoryName = _context.Categories?.FirstOrDefault(x => x.Id == product.CategoryId)?.Name,
                     SupplierName = _context.Suppliers?.FirstOrDefault(x => x.Id == product.SupplierId)?.Name
                 };
+
+                // Lấy danh sách sản phẩm cùng loại (cùng CategoryId)
+                var relatedProducts = _context.Products
+                                        .Where(p => p.CategoryId == product.CategoryId && p.Id != id)
+                                        .ToList();
+                var relatedProductsVM = relatedProducts.Select(rp => new ProductVM
+                {
+                    Id = rp.Id,
+                    Name = rp.Name,
+                    Slug = rp.Slug,
+                    Description = rp.Description,
+                    Price = rp.Price,
+                    Discount = rp.Discount,
+                    Quantity = rp.Quantity,
+                    Avatar = _context.ProductImages.FirstOrDefault(x => x.ProductId == rp.Id && x.IsAvatar)?.ImageName,
+                    Author = rp.Author,
+                    CategoryId = rp.CategoryId,
+                    SupplierId = rp.SupplierId,
+                    CategoryName = _context.Categories?.FirstOrDefault(x => x.Id == rp.CategoryId)?.Name,
+                    SupplierName = _context.Suppliers?.FirstOrDefault(x => x.Id == rp.SupplierId)?.Name
+                }).ToList();
+
+                ViewBag.RelatedProducts = relatedProductsVM;
 
                 var reviews = _context.Reviews.Where(x => x.ProductId == product.Id).ToList();
                 int rating = 0;
